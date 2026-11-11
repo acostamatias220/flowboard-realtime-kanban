@@ -83,37 +83,42 @@ export async function login({ email, password }) {
 export async function refresh(rawToken) {
   if (!rawToken) throw AppError.unauthorized('Missing refresh token');
 
-  return db.transaction(async (trx) => {
+  // The transaction returns an outcome instead of throwing, so that revoking a
+  // compromised family is committed (throwing inside would roll it back).
+  const outcome = await db.transaction(async (trx) => {
     const stored = await trx('refresh_tokens')
       .where({ token_hash: hashToken(rawToken) })
       .forUpdate()
       .first();
 
-    if (!stored) throw AppError.unauthorized('Invalid refresh token');
+    if (!stored) return { error: 'Invalid refresh token' };
 
     if (stored.revoked_at) {
       await trx('refresh_tokens')
         .where({ family_id: stored.family_id })
         .whereNull('revoked_at')
         .update({ revoked_at: trx.fn.now() });
-      throw AppError.unauthorized('Refresh token reuse detected');
+      return { error: 'Refresh token reuse detected' };
     }
 
-    if (new Date(stored.expires_at) <= new Date()) {
-      throw AppError.unauthorized('Refresh token expired');
-    }
+    if (new Date(stored.expires_at) <= new Date()) return { error: 'Refresh token expired' };
 
     await trx('refresh_tokens').where({ id: stored.id }).update({ revoked_at: trx.fn.now() });
     const user = await trx('users').where({ id: stored.user_id }).first(publicUserColumns);
-    if (!user) throw AppError.unauthorized('User no longer exists');
+    if (!user) return { error: 'User no longer exists' };
 
-    return createSession(trx, user, stored.family_id);
+    return { session: await createSession(trx, user, stored.family_id) };
   });
+
+  if (outcome.error) throw AppError.unauthorized(outcome.error);
+  return outcome.session;
 }
 
 export async function logout(rawToken) {
   if (!rawToken) return;
-  const stored = await db('refresh_tokens').where({ token_hash: hashToken(rawToken) }).first();
+  const stored = await db('refresh_tokens')
+    .where({ token_hash: hashToken(rawToken) })
+    .first();
   if (stored) {
     await db('refresh_tokens')
       .where({ family_id: stored.family_id })
