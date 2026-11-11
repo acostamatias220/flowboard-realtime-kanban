@@ -58,7 +58,12 @@ export function CardItem({ card, labels = [], assignee, viewers = [], dragging =
           <span aria-label={`${card.commentCount} comentarios`}>💬 {card.commentCount}</span>
         )}
         <div className="ml-auto flex items-center gap-1.5">
-          {viewers.length > 0 && <AvatarStack users={viewers} size="sm" max={2} />}
+          {viewers.length > 0 && (
+            <span className="flex items-center gap-1" title="Viendo ahora">
+              <span aria-hidden="true">👀</span>
+              <AvatarStack users={viewers} size="sm" max={2} />
+            </span>
+          )}
           {assignee && <Avatar user={assignee} size="sm" />}
         </div>
       </div>
