@@ -23,7 +23,7 @@ Gestor de proyectos estilo Kanban **fullstack** donde varios usuarios trabajan s
 - **Tiempo real** con Socket.IO: los movimientos y ediciones se reflejan en todos los clientes conectados al tablero.
 - **Presencia**: avatares de quién está en el tablero y de quién está mirando cada tarjeta.
 - **Registro de actividad** por tablero (quién movió qué, de dónde a dónde).
-- **Límite WIP** opcional por columna.
+- **Límite WIP** por columna (soportado en la API; la UI resalta la columna cuando se supera).
 - **Seguridad**: validación con `zod`, manejo de errores centralizado, `helmet`, CORS restringido y _rate limiting_ (más estricto en endpoints de login).
 - **Calidad**: tests de integración del backend contra PostgreSQL real, tests de componentes en el frontend, ESLint + Prettier y CI en GitHub Actions.
 
