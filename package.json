@@ -1,0 +1,19 @@
+{
+  "name": "kanban-realtime",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Realtime collaborative Kanban board — React + Node + PostgreSQL + Socket.IO",
+  "license": "MIT",
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "lint": "npm --prefix server run lint && npm --prefix client run lint",
+    "test": "npm --prefix server test && npm --prefix client test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10"
+  }
+}
