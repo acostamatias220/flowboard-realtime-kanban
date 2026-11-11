@@ -25,7 +25,9 @@ const raw = {
 const parsed = envSchema.safeParse(raw);
 
 if (!parsed.success) {
-  const details = parsed.error.issues.map((i) => `  - ${i.path.join('.')}: ${i.message}`).join('\n');
+  const details = parsed.error.issues
+    .map((i) => `  - ${i.path.join('.')}: ${i.message}`)
+    .join('\n');
   console.error(`Invalid environment configuration:\n${details}`);
   process.exit(1);
 }

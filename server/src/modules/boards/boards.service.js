@@ -49,7 +49,11 @@ export function toCard(row, labelIds = []) {
 
 export const toLabel = (row) => ({ id: row.id, name: row.name, color: row.color });
 
-export async function create(workspaceId, userId, { title, description, color, withDefaultColumns }) {
+export async function create(
+  workspaceId,
+  userId,
+  { title, description, color, withDefaultColumns },
+) {
   await assertWorkspaceRole(workspaceId, userId);
   return db.transaction(async (trx) => {
     const [board] = await trx('boards')

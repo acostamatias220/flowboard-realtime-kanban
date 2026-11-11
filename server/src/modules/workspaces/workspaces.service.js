@@ -17,7 +17,9 @@ export async function listForUser(userId) {
       'w.name',
       'm.role',
       db.raw('(select count(*) from boards b where b.workspace_id = w.id) as board_count'),
-      db.raw('(select count(*) from workspace_members x where x.workspace_id = w.id) as member_count'),
+      db.raw(
+        '(select count(*) from workspace_members x where x.workspace_id = w.id) as member_count',
+      ),
     );
   return rows.map((r) => ({
     id: r.id,
@@ -127,9 +129,7 @@ export async function removeMember(workspaceId, actorId, memberId) {
 
   const leavingSelf = actorId === memberId;
   const canRemove =
-    leavingSelf ||
-    actorRole === 'owner' ||
-    (actorRole === 'admin' && target.role === 'member');
+    leavingSelf || actorRole === 'owner' || (actorRole === 'admin' && target.role === 'member');
   if (!canRemove) throw AppError.forbidden();
 
   await db.transaction(async (trx) => {

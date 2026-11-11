@@ -23,9 +23,13 @@ workspacesRouter.get('/:id', validate({ params: idParam }), async (req, res) => 
   res.json({ workspace: await service.getDetail(req.valid.params.id, req.user.id) });
 });
 
-workspacesRouter.patch('/:id', validate({ params: idParam, body: nameSchema }), async (req, res) => {
-  res.json({ workspace: await service.rename(req.valid.params.id, req.user.id, req.valid.body) });
-});
+workspacesRouter.patch(
+  '/:id',
+  validate({ params: idParam, body: nameSchema }),
+  async (req, res) => {
+    res.json({ workspace: await service.rename(req.valid.params.id, req.user.id, req.valid.body) });
+  },
+);
 
 workspacesRouter.delete('/:id', validate({ params: idParam }), async (req, res) => {
   await service.remove(req.valid.params.id, req.user.id);

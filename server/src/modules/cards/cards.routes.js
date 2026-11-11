@@ -11,15 +11,19 @@ cardsRouter.get('/:id', validate({ params: idParam }), async (req, res) => {
   res.json({ card: await service.getDetail(req.valid.params.id, req.user.id) });
 });
 
-cardsRouter.patch('/:id', validate({ params: idParam, body: updateCardSchema }), async (req, res) => {
-  const card = await service.update(
-    req.valid.params.id,
-    req.user.id,
-    req.valid.body,
-    originSocket(req),
-  );
-  res.json({ card });
-});
+cardsRouter.patch(
+  '/:id',
+  validate({ params: idParam, body: updateCardSchema }),
+  async (req, res) => {
+    const card = await service.update(
+      req.valid.params.id,
+      req.user.id,
+      req.valid.body,
+      originSocket(req),
+    );
+    res.json({ card });
+  },
+);
 
 cardsRouter.patch(
   '/:id/move',

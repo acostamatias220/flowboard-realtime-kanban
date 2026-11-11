@@ -106,7 +106,9 @@ export async function update(cardId, userId, changes, socketOpts) {
       await trx('card_labels').where({ card_id: cardId }).delete();
       const unique = [...new Set(changes.labelIds)];
       if (unique.length) {
-        await trx('card_labels').insert(unique.map((labelId) => ({ card_id: cardId, label_id: labelId })));
+        await trx('card_labels').insert(
+          unique.map((labelId) => ({ card_id: cardId, label_id: labelId })),
+        );
       }
     }
 
@@ -213,10 +215,5 @@ export async function deleteComment(commentId, userId, socketOpts) {
     throw AppError.forbidden('Only the author or an admin can delete this comment');
   }
   await db('comments').where({ id: commentId }).delete();
-  emitToBoard(
-    board.id,
-    'comment:deleted',
-    { id: commentId, cardId: comment.card_id },
-    socketOpts,
-  );
+  emitToBoard(board.id, 'comment:deleted', { id: commentId, cardId: comment.card_id }, socketOpts);
 }
