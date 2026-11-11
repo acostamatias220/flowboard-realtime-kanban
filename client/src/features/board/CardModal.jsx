@@ -45,7 +45,7 @@ function LabelPicker({ labels, selected, onToggle, onCreate }) {
         })}
       </div>
       <form
-        className="flex items-center gap-2"
+        className="space-y-2"
         onSubmit={async (e) => {
           e.preventDefault();
           if (!name.trim()) return;
@@ -53,28 +53,34 @@ function LabelPicker({ labels, selected, onToggle, onCreate }) {
           setName('');
         }}
       >
-        <input
-          className="input py-1 text-xs"
-          placeholder="Nueva etiqueta"
-          aria-label="Nueva etiqueta"
-          value={name}
-          maxLength={40}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <select
-          className="input w-24 py-1 text-xs"
-          aria-label="Color de etiqueta"
-          value={color}
-          onChange={(e) => setColor(e.target.value)}
-          style={{ color }}
-        >
+        <div className="flex gap-2">
+          <input
+            className="input min-w-0 py-1 text-xs"
+            placeholder="Nueva etiqueta"
+            aria-label="Nueva etiqueta"
+            value={name}
+            maxLength={40}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <button className="btn btn-ghost px-2 py-1 text-xs">Crear</button>
+        </div>
+        <div className="flex gap-1.5" role="radiogroup" aria-label="Color de etiqueta">
           {LABEL_COLORS.map((c) => (
-            <option key={c} value={c} style={{ color: c }}>
-              ● {c}
-            </option>
+            <button
+              key={c}
+              type="button"
+              role="radio"
+              aria-checked={color === c}
+              aria-label={c}
+              onClick={() => setColor(c)}
+              className={clsx(
+                'h-4 w-4 rounded-full',
+                color === c && 'ring-2 ring-slate-900 ring-offset-1',
+              )}
+              style={{ backgroundColor: c }}
+            />
           ))}
-        </select>
-        <button className="btn btn-ghost px-2 py-1 text-xs">Crear</button>
+        </div>
       </form>
     </div>
   );
