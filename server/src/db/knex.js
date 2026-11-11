@@ -1,7 +1,13 @@
 import knexFactory from 'knex';
+import pg from 'pg';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { env } from '../config/env.js';
+
+// Return DATE columns as 'YYYY-MM-DD' strings (avoids timezone shifts) and
+// BIGINT/COUNT values as numbers (safe for the sizes handled by this app).
+pg.types.setTypeParser(1082, (value) => value);
+pg.types.setTypeParser(20, (value) => Number.parseInt(value, 10));
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
