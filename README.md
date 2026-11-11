@@ -1,6 +1,6 @@
 # FlowBoard · Kanban colaborativo en tiempo real
 
-[![CI](https://github.com/OWNER/kanban-realtime/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/kanban-realtime/actions/workflows/ci.yml)
+[![CI](https://github.com/acostamatias220/flowboard/actions/workflows/ci.yml/badge.svg)](https://github.com/acostamatias220/flowboard/actions/workflows/ci.yml)
 ![Node](https://img.shields.io/badge/node-%3E%3D20-339933?logo=node.js&logoColor=white)
 ![React](https://img.shields.io/badge/react-19-61DAFB?logo=react&logoColor=black)
 ![PostgreSQL](https://img.shields.io/badge/postgresql-17-4169E1?logo=postgresql&logoColor=white)
