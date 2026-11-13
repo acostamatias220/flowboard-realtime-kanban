@@ -14,7 +14,7 @@ Gestor de proyectos estilo Kanban **fullstack** donde varios usuarios trabajan s
 
 ---
 
-## ✨ Funcionalidades
+##  Funcionalidades
 
 - **Autenticación segura**: registro / login con `bcrypt`, _access token_ JWT de vida corta y _refresh token_ opaco en cookie `httpOnly` con **rotación y detección de reutilización**.
 - **Workspaces con roles** (`owner`, `admin`, `member`): invitación por email, cambio de roles y permisos aplicados en el backend.
@@ -27,7 +27,7 @@ Gestor de proyectos estilo Kanban **fullstack** donde varios usuarios trabajan s
 - **Seguridad**: validación con `zod`, manejo de errores centralizado, `helmet`, CORS restringido y _rate limiting_ (más estricto en endpoints de login).
 - **Calidad**: tests de integración del backend contra PostgreSQL real, tests de componentes en el frontend, ESLint + Prettier y CI en GitHub Actions.
 
-## 🧱 Stack
+##  Stack
 
 | Capa          | Tecnologías                                                                            |
 | ------------- | -------------------------------------------------------------------------------------- |
@@ -37,7 +37,7 @@ Gestor de proyectos estilo Kanban **fullstack** donde varios usuarios trabajan s
 | Testing       | Vitest, Supertest, socket.io-client, Testing Library                                   |
 | DevOps        | Docker, docker compose, Nginx (proxy de API + WebSocket), GitHub Actions               |
 
-## 🏗️ Arquitectura
+##  Arquitectura
 
 ```mermaid
 flowchart LR
@@ -121,7 +121,7 @@ erDiagram
 - **Refresh tokens**: opacos, guardados como hash SHA-256, con rotación en cada uso y revocación de toda la "familia" si se detecta reutilización (señal de robo).
 - **Reconexión**: al reconectar el socket se vuelve a unir al tablero y se re-sincroniza el snapshot para recuperar eventos perdidos.
 
-## 📁 Estructura
+##  Estructura
 
 ```
 kanban-realtime/
@@ -147,7 +147,7 @@ kanban-realtime/
 └── .github/workflows/ci.yml
 ```
 
-## 🚀 Cómo correrlo
+##  Cómo correrlo
 
 ### Requisitos
 
@@ -204,7 +204,7 @@ npm run format:check                # Prettier
 
 Los tests del backend cubren: registro/login, rotación y reutilización de refresh tokens, permisos por rol, CRUD de tarjetas, movimientos entre columnas, re-balanceo de posiciones, log de actividad y eventos de Socket.IO (presencia, broadcast sin eco, autenticación del handshake).
 
-## 🔐 Variables de entorno
+##  Variables de entorno
 
 ### `server/.env`
 
@@ -234,7 +234,7 @@ Los tests del backend cubren: registro/login, rotación y reutilización de refr
 
 > Ningún archivo `.env` se versiona: el repo solo incluye `.env.example` con valores vacíos.
 
-## 📡 API (resumen)
+##  API (resumen)
 
 | Método | Endpoint                              | Descripción                          |
 | ------ | ------------------------------------- | ------------------------------------ |
@@ -256,7 +256,7 @@ Los tests del backend cubren: registro/login, rotación y reutilización de refr
 
 **Eventos de Socket.IO**: `board:join`, `board:leave`, `card:focus` (cliente → servidor) y `presence:update`, `card:created|updated|moved|deleted`, `column:created|updated|moved|deleted`, `comment:created|deleted`, `label:created|deleted`, `activity:created` (servidor → clientes).
 
-## 🖼️ Capturas
+##  Capturas
 
 | Workspace y miembros                           | Detalle de tarjeta                          |
 | ---------------------------------------------- | ------------------------------------------- |
@@ -268,12 +268,12 @@ Los tests del backend cubren: registro/login, rotación y reutilización de refr
 
 <!-- Podés agregar un GIF de dos navegadores sincronizados en docs/screenshots/realtime.gif -->
 
-## 🗺️ Próximos pasos
+##  Próximos pasos
 
 - Adapter de Redis para Socket.IO y presencia compartida (escalado horizontal).
 - Notificaciones por email de tarjetas vencidas.
 - Tests end-to-end con Playwright.
 
-## 📄 Licencia
+##  Licencia
 
 MIT © Matías Acosta
